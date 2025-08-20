@@ -1,4 +1,6 @@
+todo
 todo groceries
+event class
 event class /from 2pm /to 4pm
 deadline homework /by tomorrow
 mark 2

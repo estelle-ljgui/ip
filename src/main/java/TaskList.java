@@ -7,10 +7,8 @@ public class TaskList {
 		this.tasks = new ArrayList<>();
 	}
 
-	public String add(String s) {
-		Task t = new Task(s);
+	public void add(Task t) {
 		this.tasks.add(t);
-		return t.toString();
 	}
 
 	public String mark(int index) throws TaskNotFoundException {

@@ -31,6 +31,13 @@ public class Guibot {
 				int taskNumber = Integer.parseInt(input.substring(7));
 				System.out.println("\n\t  OK, I've marked this task as not done yet:\n\t  " + tasklist.unmark(taskNumber - 1));
 
+			} else if (input.matches("delete [0-9]*")) {
+
+				int taskNumber = Integer.parseInt(input.substring(7));
+				System.out.println(String.format("\n\t  Noted. I've removed this task:\n\t    %s\n\t  Now you have %d tasks in the list.",
+							tasklist.delete(taskNumber - 1), tasklist.size()));
+
+				
 			} else if (input.matches("todo.*")) {
 
 				if (!input.matches("todo .*")) {
@@ -39,7 +46,8 @@ public class Guibot {
 
 				Task t = new Todo(input.substring(5));
 				tasklist.add(t);
-				System.out.println("\n\t  Got it, I've added this task: \n\t  " + t.toString());
+				System.out.println(String.format("\n\t  Got it, I've added this task:\n\t    %s\n\t  Now you have %d tasks in the list.",
+							t.toString(), tasklist.size()));
 
 			} else if (input.matches("deadline.*")) {
 
@@ -50,7 +58,8 @@ public class Guibot {
 				String[] split = input.split(" /by ");
 				Task t = new Deadline(split[0].substring(9), split[1]);
 				tasklist.add(t);
-				System.out.println("\n\t  Got it, I've added this task: \n\t  " + t.toString());
+				System.out.println(String.format("\n\t  Got it, I've added this task:\n\t    %s\n\t  Now you have %d tasks in the list.",
+							t.toString(), tasklist.size()));
 
 			} else if (input.matches("event.*")) {
 
@@ -61,7 +70,8 @@ public class Guibot {
 				String[] split = input.split(" /");
 				Task t = new Event(split[0].substring(6), split[1].substring(5), split[2].substring(3));
 				tasklist.add(t);
-				System.out.println("\n\t  Got it, I've added this task: \n\t  " + t.toString());
+				System.out.println(String.format("\n\t  Got it, I've added this task:\n\t    %s\n\t  Now you have %d tasks in the list.",
+							t.toString(), tasklist.size()));
 
 			} else {
 

@@ -29,6 +29,18 @@ public class TaskList {
 		}
 	}
 
+	public String delete(int index) throws TaskNotFoundException {
+		if (index >= 0 && index < this.tasks.size()) {
+			return this.tasks.remove(index).toString();
+		} else {
+			throw new TaskNotFoundException();
+		}
+	}
+
+	public int size() {
+		return this.tasks.size();
+	}
+
 	public String toString() {
 		String s = "";
 

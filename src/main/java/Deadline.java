@@ -6,6 +6,10 @@ public class Deadline extends Task {
 		this.deadline = arguments[1];
 	}
 
+	public String toStorageString() {
+		return "d//" + super.toStorageString() + "/" + this.deadline;
+	}
+
 	@Override
 	public String toString() {
 		return "[D]" + super.toString() + " (by: " + this.deadline + ")";

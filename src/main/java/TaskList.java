@@ -41,13 +41,19 @@ public class TaskList {
 		return this.tasks.size();
 	}
 
+	public String toStorageString() {
+		String[] s = new String[this.tasks.size()];
+		for (int i = 0; i < this.tasks.size(); i++) {
+			s[i] = this.tasks.get(i).toStorageString();
+		}
+		return String.join("\n", s);
+	}
+
 	public String toString() {
 		String s = "";
-
 		for (int i = 0; i < this.tasks.size(); i++) {
 			s += String.format("\n\t  %d.%s", i + 1, this.tasks.get(i).toString());
 		}
-
 		return s;
 	}
 }

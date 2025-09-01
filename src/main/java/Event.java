@@ -8,6 +8,10 @@ public class Event extends Task {
 		this.to = arguments[2];
 	}
 
+	public String toStorageString() {
+		return "e//" + super.toStorageString() + "/" + this.from + "/" + this.to;
+	}
+
 	@Override
 	public String toString() {
 		return "[E]" + super.toString() + " (from: " + this.from + " to: " + this.to + ")";

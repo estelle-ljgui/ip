@@ -1,0 +1,5 @@
+t//true//something
+t//false//something
+e//false//something/now/sometime
+d//true//homework/tomorrow
+e//false//pet wugui/now/sometime

@@ -1,2 +1,0 @@
-t//false//groceries
-e//false//class/2pm/4pm

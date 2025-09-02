@@ -5,50 +5,59 @@ import java.nio.file.Files;
 import java.util.Scanner;
 
 class Storage {
-	private static final Path DIRECTORY_PATH = Paths.get("..", "data");
-	private static final Path FILE_PATH = Paths.get("..", "data", "Tasks.txt"); 
+	private Path path;
 
-	public static void setup() throws IOException {
-		if (!Files.exists(DIRECTORY_PATH)) {
-			Files.createDirectory(DIRECTORY_PATH);
-		}
-		if (!Files.exists(FILE_PATH)) {
-			Files.createFile(FILE_PATH);
-		}
-	}
-
-	public static TaskList getTasks() throws IOException, GuibotException {
-		Scanner taskReader = new Scanner(FILE_PATH);
-		TaskList taskList = new TaskList();
-		while (taskReader.hasNextLine()) {
-			String[] taskInfo = taskReader.nextLine().split("//", 3);
-			if (taskInfo.length != 3) {
-				throw new GuibotException("Data file not formatted properly");
-			} else {
-				Task t;
-				switch (taskInfo[0]) {
-					case "t":
-						t = new Todo(taskInfo[2].split("/"));
-						break;
-					case "d":
-						t = new Deadline(taskInfo[2].split("/"));
-						break;
-					case "e":
-						t = new Event(taskInfo[2].split("/"));
-						break;
-					default:
-						throw new GuibotException("Data file not formatted properly");
-				}	
-				if (taskInfo[1].equals("true")) {
-					t.mark();
-				}
-				taskList.add(t);
+	public Storage(String directoryPath, String fileName) {
+		this.path = Paths.get(directoryPath + fileName);
+		try {
+			Files.createDirectories(Paths.get(directoryPath));
+			if (!Files.exists(path)) {
+				Files.createFile(path);
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return taskList;
 	}
 
-	public static void saveTasks(TaskList taskList) throws IOException {
-		Files.writeString(FILE_PATH, taskList.toStorageString());
+	public void getTasks(TaskList tasks) throws GuibotException {
+		Scanner taskReader;
+		try {
+			taskReader = new Scanner(this.path);
+			while (taskReader.hasNextLine()) {
+				String[] taskInfo = taskReader.nextLine().split("//", 3);
+				if (taskInfo.length != 3) {
+					throw new GuibotException("Data file not formatted properly");
+				} else {
+					Task t;
+					switch (taskInfo[0]) {
+						case "t":
+							t = new Todo(taskInfo[2].split("/"));
+							break;
+						case "d":
+							t = new Deadline(taskInfo[2].split("/"));
+							break;
+						case "e":
+							t = new Event(taskInfo[2].split("/"));
+							break;
+						default:
+							throw new GuibotException("Data file not formatted properly");
+					}	
+					if (taskInfo[1].equals("true")) {
+						t.mark();
+					}
+					tasks.add(t);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void saveTasks(TaskList taskList) {
+		try {
+			Files.writeString(path, taskList.toStorageString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

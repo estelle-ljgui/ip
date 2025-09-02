@@ -1,4 +1,11 @@
-class UnmarkCommand extends Command {
+package guibot.command;
+
+import guibot.exception.GuibotException;
+import guibot.Storage;
+import guibot.TaskList;
+import guibot.Ui;
+
+public class UnmarkCommand extends Command {
 	private int index;
 
 	public UnmarkCommand(int index) {

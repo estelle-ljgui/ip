@@ -1,4 +1,11 @@
-class MarkCommand extends Command {
+package guibot.command;
+
+import guibot.exception.GuibotException;
+import guibot.Storage;
+import guibot.TaskList;
+import guibot.Ui;
+
+public class MarkCommand extends Command {
 	private int index;
 
 	public MarkCommand(int index) {

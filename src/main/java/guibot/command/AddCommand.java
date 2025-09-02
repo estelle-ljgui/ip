@@ -1,4 +1,11 @@
-class AddCommand extends Command {
+package guibot.command;
+
+import guibot.Storage;
+import guibot.TaskList;
+import guibot.Ui;
+import guibot.task.Task;
+
+public class AddCommand extends Command {
 	private Task task;
 
 	public AddCommand(Task task) {

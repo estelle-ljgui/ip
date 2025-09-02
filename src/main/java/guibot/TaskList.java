@@ -1,3 +1,7 @@
+package guibot;
+
+import guibot.exception.TaskNotFoundException;
+import guibot.task.Task;
 import java.util.ArrayList;
 
 public class TaskList {

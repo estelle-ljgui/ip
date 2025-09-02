@@ -1,3 +1,8 @@
+package guibot;
+
+import guibot.exception.GuibotException;
+import guibot.command.Command;
+
 public class Guibot {
 
 	private Storage storage;

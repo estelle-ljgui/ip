@@ -1,3 +1,5 @@
+package guibot.exception;
+
 public class GuibotException extends Exception {
 	private String message;
 

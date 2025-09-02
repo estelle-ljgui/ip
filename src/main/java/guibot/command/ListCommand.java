@@ -1,4 +1,10 @@
-class ListCommand extends Command {
+package guibot.command;
+
+import guibot.Storage;
+import guibot.TaskList;
+import guibot.Ui;
+
+public class ListCommand extends Command {
 	@Override
 	public void execute(TaskList tasks, Ui ui, Storage storage) {
 		ui.showString("Here are the tasks in your list:" + tasks.toString());

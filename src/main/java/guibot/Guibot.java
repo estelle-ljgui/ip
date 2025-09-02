@@ -3,12 +3,21 @@ package guibot;
 import guibot.exception.GuibotException;
 import guibot.command.Command;
 
+/**
+ * Represents a Guibot
+ */
 public class Guibot {
 
 	private Storage storage;
 	private Ui ui;
 	private TaskList tasks;
-
+	
+	/**
+	 * Initialises a Guibot
+	 *
+	 * @param directoryPath Path to the directory of the data file
+	 * @param fileName Name of the data file
+	 */
 	public Guibot(String directoryPath, String fileName) {
 		this.ui = new Ui();
 		this.storage = new Storage(directoryPath, fileName);
@@ -20,6 +29,9 @@ public class Guibot {
 		}
 	}
 
+	/**
+	 * Runs the Guibot
+	 */
 	public void run() {
 		ui.showWelcome();
 		boolean isExit = false;

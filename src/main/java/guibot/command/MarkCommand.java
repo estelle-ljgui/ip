@@ -5,9 +5,17 @@ import guibot.Storage;
 import guibot.TaskList;
 import guibot.Ui;
 
+/**
+ * Command to mark a task as done
+ */
 public class MarkCommand extends Command {
 	private int index;
 
+	/**
+	 * Initialises a MarkCommand object
+	 *
+	 * @param index Index of task to be marked as done
+	 */
 	public MarkCommand(int index) {
 		this.index = index;
 	}

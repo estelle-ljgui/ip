@@ -15,8 +15,17 @@ import guibot.task.Todo;
 import guibot.task.Deadline;
 import guibot.task.Event;
 
+/**
+ * Converts input into a command
+ */
 public class Parser {
-
+	
+	/**
+	 * Converts input into a command
+	 *
+	 * @param input The input in String format
+	 * @throws GuibotException If input is missing arguments
+	 */
 	public static Command parse(String input) throws GuibotException {
 		String[] splitInput = input.split(" ", 2);
 		switch (splitInput[0]) {

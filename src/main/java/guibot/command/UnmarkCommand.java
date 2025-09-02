@@ -5,9 +5,17 @@ import guibot.Storage;
 import guibot.TaskList;
 import guibot.Ui;
 
+/**
+ * Command to mark a task as not done
+ */
 public class UnmarkCommand extends Command {
 	private int index;
 
+	/**
+	 * Initialises an UnmarkCommand object
+	 *
+	 * @param index Index of task to be marked as not done
+	 */
 	public UnmarkCommand(int index) {
 		this.index = index;
 	}

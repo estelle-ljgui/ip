@@ -4,17 +4,34 @@ import guibot.exception.TaskNotFoundException;
 import guibot.task.Task;
 import java.util.ArrayList;
 
+/**
+ * Represents a list of tasks
+ */
 public class TaskList {
 	private ArrayList<Task> tasks;
 
+	/**
+	 * Initialises an empty TaskList
+	 */
 	public TaskList() {
 		this.tasks = new ArrayList<>();
 	}
 
+	/**
+	 * Adds a task into the list
+	 *
+	 * @param t Task to be added
+	 */
 	public void add(Task t) {
 		this.tasks.add(t);
 	}
 
+	/**
+	 * Marks a task as done
+	 *
+	 * @param index Index of task to be marked as done
+	 * @throws TaskNotFoundException If index does not correspond to a task on the list
+	 */
 	public String mark(int index) throws TaskNotFoundException {
 		if (index >= 0 && index < this.tasks.size()) {
 			this.tasks.get(index).mark();
@@ -24,6 +41,12 @@ public class TaskList {
 		}
 	}
 
+	/**
+	 * Marks a task as not done
+	 *
+	 * @param index Index of task to be marked as not done
+	 * @throws TaskNotFoundException If index does not correspond to a task on the list
+	 */
 	public String unmark(int index) throws TaskNotFoundException {
 		if (index >= 0 && index < this.tasks.size()) {
 			this.tasks.get(index).unmark();
@@ -33,6 +56,12 @@ public class TaskList {
 		}
 	}
 
+	/**
+	 * Deletes a task
+	 *
+	 * @param index Index of task to be deleted
+	 * @throws TaskNotFoundException If index does not correspond to a task on the list
+	 */
 	public String delete(int index) throws TaskNotFoundException {
 		if (index >= 0 && index < this.tasks.size()) {
 			return this.tasks.remove(index).toString();
@@ -41,10 +70,16 @@ public class TaskList {
 		}
 	}
 
+	/**
+	 * Returns the number of tasks in the list
+	 */
 	public int size() {
 		return this.tasks.size();
 	}
 
+	/**
+	 * Returns a string formatted for storing in a data file
+	 */
 	public String toStorageString() {
 		String[] s = new String[this.tasks.size()];
 		for (int i = 0; i < this.tasks.size(); i++) {
@@ -53,6 +88,7 @@ public class TaskList {
 		return String.join("\n", s);
 	}
 
+	@Override
 	public String toString() {
 		String s = "";
 		for (int i = 0; i < this.tasks.size(); i++) {

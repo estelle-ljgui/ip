@@ -8,9 +8,18 @@ import java.nio.file.Path;
 import java.nio.file.Files;
 import java.util.Scanner;
 
+/**
+ * Handles interactions with the data file
+ */
 public class Storage {
 	private Path path;
-
+	
+	/**
+	 * Initialises a Storage object
+	 *
+	 * @param directoryPath Path to directory of data file
+	 * @param fileName Name of data file
+	 */
 	public Storage(String directoryPath, String fileName) {
 		this.path = Paths.get(directoryPath + fileName);
 		try {
@@ -23,6 +32,12 @@ public class Storage {
 		}
 	}
 
+	/**
+	 * Gets tasks from data file and puts them into a TaskList
+	 *
+	 * @param tasks TaskList to put tasks into
+	 * @throws GuibotException If data file is corrupted
+	 */
 	public void getTasks(TaskList tasks) throws GuibotException {
 		Scanner taskReader;
 		try {
@@ -57,6 +72,11 @@ public class Storage {
 		}
 	}
 
+	/**
+	 * Saves tasks from a TaskList into the data file
+	 *
+	 * @param taskList TaskList to save tasks from
+	 */
 	public void saveTasks(TaskList taskList) {
 		try {
 			Files.writeString(path, taskList.toStorageString());

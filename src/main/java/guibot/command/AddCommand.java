@@ -5,9 +5,17 @@ import guibot.TaskList;
 import guibot.Ui;
 import guibot.task.Task;
 
+/**
+ * Command to add a task to the list
+ */
 public class AddCommand extends Command {
 	private Task task;
 
+	/**
+	 * Initialises an AddCommand object
+	 *
+	 * @param task Task to be added
+	 */
 	public AddCommand(Task task) {
 		this.task = task;
 	}

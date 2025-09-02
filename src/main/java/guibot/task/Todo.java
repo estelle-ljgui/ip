@@ -1,3 +1,5 @@
+package guibot.task;
+
 public class Todo extends Task {
 	public Todo(String[] arguments) {
 		super(arguments[0]);

@@ -1,6 +1,9 @@
+package guibot;
+
+import guibot.exception.GuibotException;
 import java.util.Scanner;
 
-class Ui {
+public class Ui {
 	private Scanner scanner;
 	
 	public Ui() {

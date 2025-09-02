@@ -1,4 +1,11 @@
-class DeleteCommand extends Command {
+package guibot.command;
+
+import guibot.exception.GuibotException;
+import guibot.Storage;
+import guibot.TaskList;
+import guibot.Ui;
+
+public class DeleteCommand extends Command {
 	private int index;
 
 	public DeleteCommand(int index) {

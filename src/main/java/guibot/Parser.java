@@ -1,4 +1,21 @@
-class Parser {
+package guibot;
+
+import guibot.command.Command;
+import guibot.command.AddCommand;
+import guibot.command.DeleteCommand;
+import guibot.command.MarkCommand;
+import guibot.command.UnmarkCommand;
+import guibot.command.ListCommand;
+import guibot.command.ExitCommand;
+import guibot.exception.GuibotException;
+import guibot.exception.UnknownRequestException;
+import guibot.task.Task;
+import guibot.task.TaskType;
+import guibot.task.Todo;
+import guibot.task.Deadline;
+import guibot.task.Event;
+
+public class Parser {
 
 	public static Command parse(String input) throws GuibotException {
 		String[] splitInput = input.split(" ", 2);

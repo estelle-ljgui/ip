@@ -1,10 +1,14 @@
+package guibot;
+
+import guibot.exception.GuibotException;
+import guibot.task.*;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.nio.file.Files;
 import java.util.Scanner;
 
-class Storage {
+public class Storage {
 	private Path path;
 
 	public Storage(String directoryPath, String fileName) {

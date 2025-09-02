@@ -1,2 +1,0 @@
-t//false//groceries
-e//false//class/2025-08-22 1400/2025-08-22 1600

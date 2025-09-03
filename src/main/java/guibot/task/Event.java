@@ -3,17 +3,26 @@ package guibot.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents an event task
+ */
 public class Event extends Task {
 	private LocalDateTime from;
 	private LocalDateTime to;
 	private final static DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
+	/**
+	 * Initialises an Event object
+	 *
+	 * @param arguments Array of strings containing description, start and end of the task
+	 */
 	public Event(String[] arguments) {
 		super(arguments[0]);
 		this.from = LocalDateTime.parse(arguments[1], DATE_TIME_FORMAT);
 		this.to = LocalDateTime.parse(arguments[2], DATE_TIME_FORMAT);
 	}
 
+	@Override
 	public String toStorageString() {
 		return "e//" + super.toStorageString() + "/" +
 			this.from.format(DATE_TIME_FORMAT) + "/" +

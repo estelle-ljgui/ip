@@ -78,6 +78,20 @@ public class TaskList {
         return tasks.size();
     }
 
+
+    /**
+     * Returns a TaskList with all the tasks that contain the given string.
+     *
+     * @param string String to find.
+     */
+    public TaskList find(String string) {
+        TaskList tasksContainingString = new TaskList();
+        tasks.stream()
+            .filter(task -> task.toString().contains(string))
+            .forEach(task -> tasksContainingString.add(task));
+        return tasksContainingString;
+    }
+
     /**
      * Returns a string formatted for storing in a data file.
      */

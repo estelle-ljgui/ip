@@ -4,6 +4,7 @@ import guibot.command.AddCommand;
 import guibot.command.Command;
 import guibot.command.DeleteCommand;
 import guibot.command.ExitCommand;
+import guibot.command.FindCommand;
 import guibot.command.ListCommand;
 import guibot.command.MarkCommand;
 import guibot.command.UnmarkCommand;
@@ -29,6 +30,7 @@ public class Parser {
         return switch (splitInput[0]) {
         case "bye" -> new ExitCommand();
         case "list" -> new ListCommand();
+        case "find" -> new FindCommand(getSecondString(splitInput));
         case "mark" -> new MarkCommand(getIndex("mark", splitInput));
         case "unmark" -> new UnmarkCommand(getIndex("unmark", splitInput));
         case "delete" -> new DeleteCommand(getIndex("delete", splitInput));
@@ -37,6 +39,14 @@ public class Parser {
         case "event" -> new AddCommand(new Event(getDetails(TaskType.EVENT, splitInput)));
         default -> throw new UnknownRequestException();
         };
+    }
+
+    private static String getSecondString(String[] splitInput) throws GuibotException {
+        if (splitInput.length == 2) {
+            return splitInput[1];
+        } else {
+            throw new GuibotException("Please type \"find <String to search for>\".");
+        }
     }
 
     private static int getIndex(String commandWord, String[] splitInput) throws GuibotException {

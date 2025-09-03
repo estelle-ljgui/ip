@@ -3,6 +3,7 @@ package guibot;
 import guibot.exception.TaskNotFoundException;
 import guibot.task.Task;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class TaskList {
 	private ArrayList<Task> tasks;
@@ -43,6 +44,14 @@ public class TaskList {
 
 	public int size() {
 		return this.tasks.size();
+	}
+
+	public TaskList find(String string) {
+		TaskList tasksContainingString = new TaskList();
+		tasks.stream()
+			.filter(task -> task.toString().contains(string))
+			.forEach(task -> tasksContainingString.add(task));
+		return tasksContainingString;
 	}
 
 	public String toStorageString() {

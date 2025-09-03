@@ -20,7 +20,10 @@ then
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../bin Guibot < input.txt > ACTUAL.TXT
+java -classpath ../bin guibot.Guibot < input.txt > ACTUAL.TXT
+
+# delete the data file
+rm -r ../data
 
 # convert to UNIX format
 cp EXPECTED.TXT EXPECTED-UNIX.TXT

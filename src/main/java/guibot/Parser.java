@@ -3,6 +3,7 @@ package guibot;
 import guibot.command.Command;
 import guibot.command.AddCommand;
 import guibot.command.DeleteCommand;
+import guibot.command.FindCommand;
 import guibot.command.MarkCommand;
 import guibot.command.UnmarkCommand;
 import guibot.command.ListCommand;
@@ -24,6 +25,12 @@ public class Parser {
 				return new ExitCommand();
 			case "list":
 				return new ListCommand();
+			case "find":
+				if (splitInput.length == 2) {
+					return new FindCommand(splitInput[1]);
+				} else {
+					throw new GuibotException("Please type \"find <string to find>");
+				}
 			case "mark":
 				if (splitInput.length == 2 && splitInput[1].matches("[0-9]*")) {
 					return new MarkCommand(Integer.parseInt(splitInput[1]) - 1);

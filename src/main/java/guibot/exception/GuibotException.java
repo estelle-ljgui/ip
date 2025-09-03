@@ -1,7 +1,7 @@
 package guibot.exception;
 
 public class GuibotException extends Exception {
-	public GuibotException(String message) {
-		super(message);
-	}
+    public GuibotException(String message) {
+        super(message);
+    }
 }

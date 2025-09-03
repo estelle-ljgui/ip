@@ -1,28 +1,28 @@
 package guibot.task;
 
 public class Task {
-	private String description;
-	private boolean isDone;
+    private String description;
+    private boolean isDone;
 
-	public Task(String description) {
-		this.description = description;
-		this.isDone = false;
-	}
+    public Task(String description) {
+        this.description = description;
+        isDone = false;
+    }
 
-	public void mark() {
-		this.isDone = true;
-	}
+    public void mark() {
+        isDone = true;
+    }
 
-	public void unmark() {
-		this.isDone = false;
-	}
+    public void unmark() {
+        isDone = false;
+    }
 
-	public String toStorageString() {
-		return this.isDone + "//" + this.description;
-	}
+    public String toStorageString() {
+        return isDone + "//" + description;
+    }
 
-	@Override
-	public String toString() {
-		return (this.isDone ? "[X] " : "[ ] ") + this.description;
-	}
+    @Override
+    public String toString() {
+        return (isDone ? "[X] " : "[ ] ") + description;
+    }
 }

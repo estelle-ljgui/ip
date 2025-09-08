@@ -9,8 +9,8 @@ public class Todo extends Task {
      *
      * @param arguments Array of strings containing the description of the task.
      */
-    public Todo(String[] arguments) {
-        super(arguments[0]);
+    public Todo(String description) {
+        super(description);
     }
 
     @Override

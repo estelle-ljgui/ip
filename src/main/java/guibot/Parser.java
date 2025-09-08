@@ -2,17 +2,17 @@ package guibot;
 
 import guibot.command.AddCommand;
 import guibot.command.Command;
+import guibot.command.CommandType;
 import guibot.command.DeleteCommand;
 import guibot.command.ExitCommand;
 import guibot.command.FindCommand;
 import guibot.command.ListCommand;
 import guibot.command.MarkCommand;
 import guibot.command.UnmarkCommand;
-import guibot.exception.GuibotException;
 import guibot.exception.UnknownRequestException;
+import guibot.exception.WrongInputFormatException;
 import guibot.task.Deadline;
 import guibot.task.Event;
-import guibot.task.TaskType;
 import guibot.task.Todo;
 
 /**
@@ -25,44 +25,44 @@ public class Parser {
      * @param input The input in String format.
      * @throws GuibotException If input is missing arguments.
      */
-    public static Command parse(String input) throws GuibotException {
+    public static Command parse(String input) throws UnknownRequestException, WrongInputFormatException {
         String[] splitInput = input.split(" ", 2);
         return switch (splitInput[0]) {
         case "bye" -> new ExitCommand();
         case "list" -> new ListCommand();
-        case "find" -> new FindCommand(getSecondString(splitInput));
-        case "mark" -> new MarkCommand(getIndex("mark", splitInput));
-        case "unmark" -> new UnmarkCommand(getIndex("unmark", splitInput));
-        case "delete" -> new DeleteCommand(getIndex("delete", splitInput));
-        case "todo" -> new AddCommand(new Todo(getDetails(TaskType.TODO, splitInput)));
-        case "deadline" -> new AddCommand(new Deadline(getDetails(TaskType.DEADLINE, splitInput)));
-        case "event" -> new AddCommand(new Event(getDetails(TaskType.EVENT, splitInput)));
+        case "find" -> new FindCommand(getSecondString(CommandType.FIND, splitInput));
+        case "mark" -> new MarkCommand(getIndex(CommandType.MARK, splitInput));
+        case "unmark" -> new UnmarkCommand(getIndex(CommandType.UNMARK, splitInput));
+        case "delete" -> new DeleteCommand(getIndex(CommandType.DELETE, splitInput));
+        case "todo" -> new AddCommand(new Todo(getSecondString(CommandType.TODO, splitInput)));
+        case "deadline" -> new AddCommand(new Deadline(getDetails(CommandType.DEADLINE, splitInput)));
+        case "event" -> new AddCommand(new Event(getDetails(CommandType.EVENT, splitInput)));
         default -> throw new UnknownRequestException();
         };
     }
 
-    private static String getSecondString(String[] splitInput) throws GuibotException {
+    private static String getSecondString(CommandType commandType, String[] splitInput)
+            throws WrongInputFormatException {
         if (splitInput.length == 2) {
             return splitInput[1];
         } else {
-            throw new GuibotException("Please type \"find <String to search for>\".");
+            throw new WrongInputFormatException(commandType);
         }
     }
 
-    private static int getIndex(String commandWord, String[] splitInput) throws GuibotException {
+    private static int getIndex(CommandType commandType, String[] splitInput) throws WrongInputFormatException {
         if (splitInput.length == 2 && splitInput[1].matches("[0-9]*")) {
             return Integer.parseInt(splitInput[1]) - 1;
         } else {
-            throw new GuibotException(String.format("Please type \"%s <index of task>\".", commandWord));
+            throw new WrongInputFormatException(commandType);
         }
     }
 
-    private static String[] getDetails(TaskType taskType, String[] splitInput) throws GuibotException {
-        String[] splitters = taskType.getSplitters();
-        String errorMessage = String.format("Please type \"%s\".", taskType.getExpectedInputFormat());
+    private static String[] getDetails(CommandType commandType, String[] splitInput) throws WrongInputFormatException {
+        String[] splitters = commandType.getSplitters();
 
         if (splitInput.length != 2) {
-            throw new GuibotException(errorMessage);
+            throw new WrongInputFormatException(commandType);
         }
 
         String toSplit = splitInput[1];
@@ -71,7 +71,7 @@ public class Parser {
         for (int i = 0; i < splitters.length; i++) {
             String[] temp = toSplit.split(splitters[i], 2);
             if (temp.length < 2) {
-                throw new GuibotException(errorMessage);
+                throw new WrongInputFormatException(commandType);
             }
             details[i] = temp[0];
             toSplit = temp[1];

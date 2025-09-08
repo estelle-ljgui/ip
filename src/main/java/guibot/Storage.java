@@ -53,7 +53,7 @@ public class Storage {
                     throw new DataFileCorruptedException();
                 } else {
                     Task t = switch (taskInfo[0]) {
-                    case "t" -> new Todo(taskInfo[2].split("/"));
+                    case "t" -> new Todo(taskInfo[2]);
                     case "d" -> new Deadline(taskInfo[2].split("/"));
                     case "e" -> new Event(taskInfo[2].split("/"));
                     default -> throw new DataFileCorruptedException();

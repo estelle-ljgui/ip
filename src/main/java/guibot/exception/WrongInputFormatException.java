@@ -1,5 +1,7 @@
 package guibot.exception;
 
+import guibot.command.CommandType;
+
 /**
  * Exception when user inputs a command in the wrong format.
  */

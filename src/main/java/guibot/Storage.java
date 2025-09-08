@@ -17,20 +17,20 @@ import guibot.task.Todo;
  * Handles interactions with a data file.
  */
 public class Storage {
-    private Path path;
+    private Path filePath;
 
     /**
      * Creates a Storage object and the data file if it does not exist yet.
      *
-     * @param directoryPath Path to directory of data file.
-     * @param fileName Name of data file.
+     * @param filePath Path to data file.
+     * @return Storage object with path set.
      */
-    public Storage(String directoryPath, String fileName) {
-        path = Paths.get(directoryPath + fileName);
+    public Storage(String filePath) {
+        this.filePath = Paths.get(filePath);
         try {
-            Files.createDirectories(Paths.get(directoryPath));
-            if (!Files.exists(path)) {
-                Files.createFile(path);
+            Files.createDirectories(this.filePath.getParent());
+            if (!Files.exists(this.filePath)) {
+                Files.createFile(this.filePath);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,14 +46,14 @@ public class Storage {
     public void getTasks(TaskList tasks) throws GuibotException {
         Scanner taskReader;
         try {
-            taskReader = new Scanner(path);
+            taskReader = new Scanner(filePath);
             while (taskReader.hasNextLine()) {
                 String[] taskInfo = taskReader.nextLine().split("//", 3);
                 if (taskInfo.length != 3) {
                     throw new DataFileCorruptedException();
                 } else {
                     Task t = switch (taskInfo[0]) {
-                    case "t" -> new Todo(taskInfo[2].split("/"));
+                    case "t" -> new Todo(taskInfo[2]);
                     case "d" -> new Deadline(taskInfo[2].split("/"));
                     case "e" -> new Event(taskInfo[2].split("/"));
                     default -> throw new DataFileCorruptedException();
@@ -76,7 +76,7 @@ public class Storage {
      */
     public void saveTasks(TaskList taskList) {
         try {
-            Files.writeString(path, taskList.toStorageString());
+            Files.writeString(filePath, taskList.toStorageString());
         } catch (IOException e) {
             e.printStackTrace();
         }

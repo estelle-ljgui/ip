@@ -13,6 +13,8 @@ public class TaskList {
 
     /**
      * Creates an empty TaskList.
+     *
+     * @return An empty TaskList.
      */
     public TaskList() {
         tasks = new ArrayList<>();
@@ -31,6 +33,7 @@ public class TaskList {
      * Marks a task as done.
      *
      * @param index Index of task to be marked as done.
+     * @return String representation of the marked task.
      * @throws TaskNotFoundException If index does not correspond to a task on the list.
      */
     public String mark(int index) throws TaskNotFoundException {
@@ -46,6 +49,7 @@ public class TaskList {
      * Marks a task as not done.
      *
      * @param index Index of task to be marked as not done.
+     * @return String representation of the unmarked task.
      * @throws TaskNotFoundException If index does not correspond to a task on the list.
      */
     public String unmark(int index) throws TaskNotFoundException {
@@ -61,6 +65,7 @@ public class TaskList {
      * Deletes a task.
      *
      * @param index Index of task to be deleted.
+     * @return String representation of the deleted task.
      * @throws TaskNotFoundException If index does not correspond to a task on the list.
      */
     public String delete(int index) throws TaskNotFoundException {
@@ -83,6 +88,7 @@ public class TaskList {
      * Returns a TaskList with all the tasks that contain the given string.
      *
      * @param string String to find.
+     * @return Tasklist with all tasks that contain the given string.
      */
     public TaskList find(String string) {
         TaskList tasksContainingString = new TaskList();

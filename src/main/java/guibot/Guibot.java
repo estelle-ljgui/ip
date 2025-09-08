@@ -14,12 +14,12 @@ public class Guibot {
     /**
      * Creates a Guibot.
      *
-     * @param directoryPath Path to the directory of the data file.
-     * @param fileName Name of the data file.
+     * @param filePath Path to the data file.
+     * @return A Guibot with its storage set to the file.
      */
-    public Guibot(String directoryPath, String fileName) {
+    public Guibot(String filePath) {
         ui = new Ui();
-        storage = new Storage(directoryPath, fileName);
+        storage = new Storage(filePath);
         tasks = new TaskList();
         try {
             storage.getTasks(tasks);
@@ -50,6 +50,6 @@ public class Guibot {
     }
 
     public static void main(String[] args) {
-        new Guibot("../data/", "tasks.txt").run();
+        new Guibot("../data/tasks.txt").run();
     }
 }

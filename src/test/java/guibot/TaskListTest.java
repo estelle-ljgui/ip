@@ -12,7 +12,7 @@ public class TaskListTest {
         TaskList t = new TaskList();
         assertEquals(0, t.size());
 
-        t.add(new Todo(new String[]{""}));
+        t.add(new Todo(""));
         assertEquals(1, t.size());
     }
 
@@ -32,7 +32,7 @@ public class TaskListTest {
         TaskList t = new TaskList();
         assertEquals("", t.toString());
 
-        t.add(new Todo(new String[]{"something"}));
-        assertEquals("\n\t  1.[T][ ] something", t.toString());
+        t.add(new Todo("something"));
+        assertEquals("\n1.[T][ ] something", t.toString());
     }
 }

@@ -102,18 +102,14 @@ public class TaskList {
      * Returns a string formatted for storing in a data file.
      */
     public String toStorageString() {
-        String[] s = new String[tasks.size()];
-        for (int i = 0; i < tasks.size(); i++) {
-            s[i] = tasks.get(i).toStorageString();
-        }
-        return String.join("\n", s);
+        return String.join("\n", tasks.stream().map(x -> x.toStorageString()).toArray(String[]::new));
     }
 
     @Override
     public String toString() {
         String s = "";
         for (int i = 0; i < tasks.size(); i++) {
-            s += String.format("\n\t  %d.%s", i + 1, tasks.get(i).toString());
+            s += String.format("\n%d.%s", i + 1, tasks.get(i).toString());
         }
         return s;
     }

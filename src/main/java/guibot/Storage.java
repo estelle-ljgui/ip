@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 import guibot.exception.DataFileCorruptedException;
-import guibot.exception.GuibotException;
 import guibot.task.Deadline;
 import guibot.task.Event;
 import guibot.task.Task;
@@ -38,34 +37,39 @@ public class Storage {
     }
 
     /**
-     * Gets tasks from data file and puts them into a TaskList.
+     * Gets tasks from data file and return them in a TaskList.
      *
-     * @param tasks TaskList to put tasks into.
-     * @throws GuibotException If data file is corrupted.
+     * @return TaskList of tasks stored in the data file.
+     * @throws DataFileCorruptedException If data file is corrupted.
      */
-    public void getTasks(TaskList tasks) throws GuibotException {
-        Scanner taskReader;
-        try {
-            taskReader = new Scanner(filePath);
-            while (taskReader.hasNextLine()) {
-                String[] taskInfo = taskReader.nextLine().split("//", 3);
-                if (taskInfo.length != 3) {
-                    throw new DataFileCorruptedException();
-                } else {
-                    Task t = switch (taskInfo[0]) {
-                    case "t" -> new Todo(taskInfo[2]);
-                    case "d" -> new Deadline(taskInfo[2].split("/"));
-                    case "e" -> new Event(taskInfo[2].split("/"));
-                    default -> throw new DataFileCorruptedException();
-                    };
-                    if (taskInfo[1].equals("true")) {
-                        t.mark();
-                    }
-                    tasks.add(t);
-                }
+    public TaskList getTasks() throws IOException, DataFileCorruptedException {
+        Scanner taskReader = new Scanner(filePath);
+        TaskList tasks = new TaskList();
+        while (taskReader.hasNextLine()) {
+            tasks.add(getTaskFromString(taskReader.nextLine()));
+        }
+        return tasks;
+    }
+
+    private Task getTaskFromString(String string) throws DataFileCorruptedException {
+        String[] taskInfo = string.split("//", 3);
+
+        if (taskInfo.length == 3) {
+            Task t = switch (taskInfo[0]) {
+            case "t" -> new Todo(taskInfo[2]);
+            case "d" -> new Deadline(taskInfo[2].split("/"));
+            case "e" -> new Event(taskInfo[2].split("/"));
+            default -> throw new DataFileCorruptedException();
+            };
+
+            if (taskInfo[1].equals("true")) {
+                t.mark();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            return t;
+
+        } else {
+            throw new DataFileCorruptedException();
         }
     }
 

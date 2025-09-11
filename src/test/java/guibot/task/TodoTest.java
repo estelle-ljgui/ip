@@ -7,7 +7,7 @@ import guibot.task.Todo;
 public class TodoTest {
     @Test
     public void testStorageStringConversion() {
-        Todo t = new Todo(new String[]{"hello"});
+        Todo t = new Todo("hello");
         assertEquals("t//false//hello", t.toStorageString());
 
         t.mark();
@@ -16,7 +16,7 @@ public class TodoTest {
 
     @Test
     public void testStringConversion() {
-        Todo t = new Todo(new String[]{"hello"});
+        Todo t = new Todo("hello");
         assertEquals("[T][ ] hello", t.toString());
 
         t.mark();

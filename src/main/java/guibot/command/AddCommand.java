@@ -2,7 +2,6 @@ package guibot.command;
 
 import guibot.Storage;
 import guibot.TaskList;
-import guibot.Ui;
 import guibot.task.Task;
 
 /**
@@ -10,6 +9,7 @@ import guibot.task.Task;
  */
 public class AddCommand extends Command {
     private Task task;
+    private String output = "Got it, I've added this task:\n%s\nNow you have %d tasks in the list.";
 
     /**
      * Creates an AddCommand.
@@ -21,16 +21,9 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         tasks.add(task);
         storage.saveTasks(tasks);
-        ui.showString(String.format(
-                "Got it, I've added this task:\n\t    %s\n\t  Now you have %d tasks in the list.",
-                this.task.toString(), tasks.size()));
-    }
-
-    @Override
-    public boolean isExit() {
-        return false;
+        return String.format(output, task.toString(), tasks.size());
     }
 }

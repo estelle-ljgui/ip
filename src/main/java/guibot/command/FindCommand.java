@@ -2,13 +2,13 @@ package guibot.command;
 
 import guibot.Storage;
 import guibot.TaskList;
-import guibot.Ui;
 
 /**
  * Represents a command to find all tasks containing a given string.
  */
 public class FindCommand extends Command {
     private String string;
+    private String output = "Here are the matching tasks in your list:%s";
 
     /**
      * Creates a FindCommand.
@@ -18,14 +18,8 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) {
         TaskList tasksContainingString = tasks.find(string);
-        ui.showString("Here are the matching tasks in your list:\n\t    "
-                + tasksContainingString.toString());
-    }
-
-    @Override
-    public boolean isExit() {
-        return false;
+        return String.format(output, tasksContainingString.toString());
     }
 }

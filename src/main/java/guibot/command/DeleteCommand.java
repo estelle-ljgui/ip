@@ -2,7 +2,6 @@ package guibot.command;
 
 import guibot.Storage;
 import guibot.TaskList;
-import guibot.Ui;
 import guibot.exception.GuibotException;
 
 /**
@@ -10,6 +9,7 @@ import guibot.exception.GuibotException;
  */
 public class DeleteCommand extends Command {
     private int index;
+    private String output = "Noted. I've removed this task:\n%s\nNow you have %d tasks in the list.";
 
     /**
      * Creates a DeleteCommand.
@@ -21,16 +21,9 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws GuibotException {
+    public String execute(TaskList tasks, Storage storage) throws GuibotException {
         String taskString = tasks.delete(index);
         storage.saveTasks(tasks);
-        ui.showString(String.format(
-                "Noted. I've removed this task:\n\t    %s\n\t  Now you have %d tasks in the list.",
-                taskString, tasks.size()));
-    }
-
-    @Override
-    public boolean isExit() {
-        return false;
+        return String.format(output, taskString, tasks.size());
     }
 }

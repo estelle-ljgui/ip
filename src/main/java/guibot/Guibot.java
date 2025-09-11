@@ -1,55 +1,51 @@
 package guibot;
 
-import guibot.command.Command;
+import java.io.IOException;
+
+import guibot.exception.DataFileCorruptedException;
 import guibot.exception.GuibotException;
 
 /**
  * Represents a Guibot.
  */
 public class Guibot {
+    private static final String DEFAULT_FILE_PATH = "../data/tasks.txt";
+
     private Storage storage;
-    private Ui ui;
     private TaskList tasks;
 
     /**
-     * Creates a Guibot.
+     * Creates a Guibot with specified filePath.
      *
      * @param filePath Path to the data file.
      * @return A Guibot with its storage set to the file.
      */
-    public Guibot(String filePath) {
-        ui = new Ui();
+    public Guibot(String filePath) throws DataFileCorruptedException, IOException {
         storage = new Storage(filePath);
-        tasks = new TaskList();
-        try {
-            storage.getTasks(tasks);
-        } catch (GuibotException e) {
-            ui.showError(e);
-        }
+        tasks = storage.getTasks();
     }
 
     /**
-     * Runs the Guibot.
+     * Creates a Guibot with default filePath. To be used for GUI
+     *
+     * @return A Guibot with its storage set to the file in the default location.
      */
-    public void run() {
-        ui.showWelcome();
-        boolean isExit = false;
-        while (!isExit) {
-            try {
-                String input = ui.readInput();
-                ui.showLine();
-                Command c = Parser.parse(input);
-                c.execute(tasks, ui, storage);
-                isExit = c.isExit();
-            } catch (GuibotException e) {
-                ui.showError(e);
-            } finally {
-                ui.showLine();
-            }
-        }
+    public Guibot() throws DataFileCorruptedException, IOException {
+        storage = new Storage(DEFAULT_FILE_PATH);
+        tasks = storage.getTasks();
     }
 
-    public static void main(String[] args) {
-        new Guibot("../data/tasks.txt").run();
+    /**
+     * Gets the Guibot's response to an input string.
+     *
+     * @param input The input string.
+     * @return A string response
+     */
+    public String getResponse(String input) {
+        try {
+            return Parser.parse(input).execute(tasks, storage);
+        } catch (GuibotException e) {
+            return e.getMessage();
+        }
     }
 }

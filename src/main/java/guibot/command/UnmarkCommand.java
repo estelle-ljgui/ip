@@ -17,12 +17,15 @@ public class UnmarkCommand extends Command {
      * @param index Index of task to be marked as not done.
      */
     public UnmarkCommand(int index) {
+        assert index != null : "Cannot make an UnmarkCommand with a null index";
         this.index = index;
     }
 
     @Override
     public String execute(TaskList tasks, Storage storage) throws GuibotException {
+        assert tasks != null : "Cannot unmark a task in a null tasklist";
         String taskString = tasks.unmark(index);
+	assert storage != null : "Cannot save to a null storage";
         storage.saveTasks(tasks);
         return String.format(output, taskString);
     }

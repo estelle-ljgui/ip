@@ -33,6 +33,7 @@ public class Storage {
             }
         } catch (IOException e) {
             e.printStackTrace();
+	    assert false : "Failed to create Storage";
         }
     }
 

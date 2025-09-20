@@ -10,6 +10,7 @@ public class Todo extends Task {
      * @param arguments Array of strings containing the description of the task.
      */
     public Todo(String description) {
+        assert description != null : "Cannot make todo task with no description";
         super(description);
     }
 

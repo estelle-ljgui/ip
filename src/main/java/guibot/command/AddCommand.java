@@ -17,12 +17,15 @@ public class AddCommand extends Command {
      * @param task Task to be added.
      */
     public AddCommand(Task task) {
+        assert task != null : "Cannot make an AddCommand with a null task";
         this.task = task;
     }
 
     @Override
     public String execute(TaskList tasks, Storage storage) {
+        assert tasks != null : "Cannot add to a null tasklist";
         tasks.add(task);
+	assert storage != null : "Cannot save to a null storage";
         storage.saveTasks(tasks);
         return String.format(output, task.toString(), tasks.size());
     }

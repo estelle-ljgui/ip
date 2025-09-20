@@ -18,8 +18,11 @@ public class Event extends Task {
      * @param arguments Array of strings containing description, start and end of the task.
      */
     public Event(String[] arguments) {
+        assert arguments.length > 0 : "Cannot make Event task with no description";
         super(arguments[0]);
+	assert arguments.length > 1 : "Cannot make Event task with no start";
         from = LocalDateTime.parse(arguments[1], STORAGE_DATE_TIME_FORMAT);
+	assert arguments.length > 2 : "Cannot make Event task with no end";
         to = LocalDateTime.parse(arguments[2], STORAGE_DATE_TIME_FORMAT);
     }
 

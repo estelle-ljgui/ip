@@ -17,12 +17,15 @@ public class DeleteCommand extends Command {
      * @param index Index of task to be deleted.
      */
     public DeleteCommand(int index) {
+        assert index != null : "Cannot make a DeleteCommand with a null index";
         this.index = index;
     }
 
     @Override
     public String execute(TaskList tasks, Storage storage) throws GuibotException {
+	assert tasks != null : "Cannot delete from a null tasklist";
         String taskString = tasks.delete(index);
+	assert storage != null : "Cannot save to a null storage";
         storage.saveTasks(tasks);
         return String.format(output, taskString, tasks.size());
     }

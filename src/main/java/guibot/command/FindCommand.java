@@ -14,11 +14,13 @@ public class FindCommand extends Command {
      * Creates a FindCommand.
      */
     public FindCommand(String string) {
+        assert string != null : "Cannot make a FindCommand with a null string";
         this.string = string;
     }
 
     @Override
     public String execute(TaskList tasks, Storage storage) {
+        assert tasks != null : "Cannot find from a null tasklist";
         TaskList tasksContainingString = tasks.find(string);
         return String.format(output, tasksContainingString.toString());
     }

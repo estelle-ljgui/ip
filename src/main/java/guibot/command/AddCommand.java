@@ -35,7 +35,7 @@ public class AddCommand extends Command {
      *
      * @param input The input string to construct the AddCommand from.
      * @param taskType The type of task to be added.
-     * @return An AddCommand constructed from the string
+     * @return An AddCommand constructed from the string.
      * @throws WrongInputFormatException If the string is not in the correct format.
      */
     public static AddCommand of(String input, TaskType taskType) throws GuibotException {

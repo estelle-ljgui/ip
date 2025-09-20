@@ -78,6 +78,13 @@ public class TaskList {
     }
 
     /**
+     * Clears all tasks.
+     */
+    public void clear() {
+        tasks = new ArrayList<>();
+    }
+
+    /**
      * Returns the number of tasks in the list.
      */
     public int size() {

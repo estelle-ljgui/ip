@@ -7,10 +7,6 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 import guibot.exception.DataFileCorruptedException;
-import guibot.task.Deadline;
-import guibot.task.Event;
-import guibot.task.Task;
-import guibot.task.Todo;
 
 /**
  * Handles interactions with a data file.
@@ -24,16 +20,13 @@ public class Storage {
      * @param filePath Path to data file.
      * @return Storage object with path set.
      */
-    public Storage(String filePath) {
+    public Storage(String filePath) throws IOException {
         this.filePath = Paths.get(filePath);
-        try {
-            Files.createDirectories(this.filePath.getParent());
-            if (!Files.exists(this.filePath)) {
-                Files.createFile(this.filePath);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-	    assert false : "Failed to create Storage";
+
+        // Create the data directory and file if it does not exist
+        Files.createDirectories(this.filePath.getParent());
+        if (!Files.exists(this.filePath)) {
+            Files.createFile(this.filePath);
         }
     }
 
@@ -47,31 +40,9 @@ public class Storage {
         Scanner taskReader = new Scanner(filePath);
         TaskList tasks = new TaskList();
         while (taskReader.hasNextLine()) {
-            tasks.add(getTaskFromString(taskReader.nextLine()));
+            tasks.add(Parser.getTaskFromString(taskReader.nextLine()));
         }
         return tasks;
-    }
-
-    private Task getTaskFromString(String string) throws DataFileCorruptedException {
-        String[] taskInfo = string.split("//", 3);
-
-        if (taskInfo.length == 3) {
-            Task t = switch (taskInfo[0]) {
-            case "t" -> new Todo(taskInfo[2]);
-            case "d" -> new Deadline(taskInfo[2].split("/"));
-            case "e" -> new Event(taskInfo[2].split("/"));
-            default -> throw new DataFileCorruptedException();
-            };
-
-            if (taskInfo[1].equals("true")) {
-                t.mark();
-            }
-
-            return t;
-
-        } else {
-            throw new DataFileCorruptedException();
-        }
     }
 
     /**
@@ -79,11 +50,7 @@ public class Storage {
      *
      * @param taskList TaskList to save tasks from.
      */
-    public void saveTasks(TaskList taskList) {
-        try {
-            Files.writeString(filePath, taskList.toStorageString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void saveTasks(TaskList taskList) throws IOException {
+        Files.writeString(filePath, taskList.toStorageString());
     }
 }

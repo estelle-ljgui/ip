@@ -1,42 +1,56 @@
 package guibot.task;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import guibot.Parser;
+import guibot.exception.WrongDateTimeFormatException;
 
 /**
  * Represents an event task.
  */
 public class Event extends Task {
-    private static final DateTimeFormatter STORAGE_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-    private static final DateTimeFormatter OUTPUT_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("MMM d yyyy h.mma");
-    private LocalDateTime from;
-    private LocalDateTime to;
+    private LocalDateTime start;
+    private LocalDateTime end;
 
     /**
      * Creates an Event task.
      *
-     * @param arguments Array of strings containing description, start and end of the task.
+     * @param description Description of the deadline task.
+     * @param from The start of the task.
+     * @param to The end of the task.
      */
-    public Event(String[] arguments) {
-        assert arguments.length > 0 : "Cannot make Event task with no description";
-        super(arguments[0]);
-	assert arguments.length > 1 : "Cannot make Event task with no start";
-        from = LocalDateTime.parse(arguments[1], STORAGE_DATE_TIME_FORMAT);
-	assert arguments.length > 2 : "Cannot make Event task with no end";
-        to = LocalDateTime.parse(arguments[2], STORAGE_DATE_TIME_FORMAT);
+    private Event(String description, LocalDateTime start, LocalDateTime end) {
+        super(description);
+        this.start = start;
+        this.end = end;
+    }
+
+    /**
+     * Factory method that creates an Event task from an array of strings.
+     * Assumes that the number of elements in details is correct.
+     *
+     * @param details Array of string details to create Event task from.
+     * @throws WrongDateTimeFormatException If the date time is in the wrong format.
+     */
+    public static Event of(String... details) throws WrongDateTimeFormatException {
+        assert details.length == 3 : "Wrong number of elements in details";
+        String description = details[0];
+        LocalDateTime start = Parser.getDateTimeFromString(details[1]);
+        LocalDateTime end = Parser.getDateTimeFromString(details[2]);
+        return new Event(description, start, end);
     }
 
     @Override
     public String toStorageString() {
         return "e//" + super.toStorageString()
-                + "/" + from.format(STORAGE_DATE_TIME_FORMAT)
-                + "/" + to.format(STORAGE_DATE_TIME_FORMAT);
+                + "/" + Parser.getInputStringFromDateTime(start)
+                + "/" + Parser.getInputStringFromDateTime(end);
     }
 
     @Override
     public String toString() {
         return "[E]" + super.toString()
-                + " (from: " + from.format(OUTPUT_DATE_TIME_FORMAT)
-                + " to: " + to.format(OUTPUT_DATE_TIME_FORMAT) + ")";
+                + " (from: " + Parser.getOutputStringFromDateTime(start)
+                + " to: " + Parser.getOutputStringFromDateTime(end) + ")";
     }
 }

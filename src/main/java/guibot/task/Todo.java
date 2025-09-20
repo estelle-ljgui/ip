@@ -7,11 +7,22 @@ public class Todo extends Task {
     /**
      * Creates a Todo task.
      *
-     * @param arguments Array of strings containing the description of the task.
+     * @param description Description of the Todo task.
      */
-    public Todo(String description) {
-        assert description != null : "Cannot make todo task with no description";
+    private Todo(String description) {
         super(description);
+    }
+
+    /**
+     * Factory method that creates an Event task from an array of strings.
+     * Assumes that the number of elements in details is correct.
+     *
+     * @param details Array of string details to create Event task from.
+     */
+    public static Todo of(String... details) {
+        assert details.length == 1 : "Wrong number of elements in details";
+        String description = details[0];
+        return new Todo(description);
     }
 
     @Override

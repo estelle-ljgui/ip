@@ -3,7 +3,6 @@ package guibot.gui;
 import java.io.IOException;
 
 import guibot.Guibot;
-import guibot.exception.DataFileCorruptedException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,8 +21,6 @@ public class Main extends Application {
             stage.setScene(scene);
             mw.setGuibot(new Guibot()); // inject the Guibot instance
             stage.show();
-        } catch (DataFileCorruptedException e) {
-            System.out.println(e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }

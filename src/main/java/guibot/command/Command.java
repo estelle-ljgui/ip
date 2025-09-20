@@ -1,5 +1,7 @@
 package guibot.command;
 
+import java.io.IOException;
+
 import guibot.Storage;
 import guibot.TaskList;
 import guibot.exception.GuibotException;
@@ -15,5 +17,5 @@ public abstract class Command {
      * @param storage Storage required to execute actions.
      * @return String response to be outputted.
      */
-    public abstract String execute(TaskList tasks, Storage storage) throws GuibotException;
+    public abstract String execute(TaskList tasks, Storage storage) throws GuibotException, IOException;
 }

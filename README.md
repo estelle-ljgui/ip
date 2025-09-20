@@ -1,3 +1,4 @@
+<!-- Written using ChatGPT -->
 # Guibot User Guide
 
 Welcome to **Guibot**, a simple task manager! Use this guide to learn how to manage and track your tasks easily. Guibot is a Java-based application available as a `.jar` file.

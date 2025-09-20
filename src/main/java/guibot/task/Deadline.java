@@ -1,33 +1,47 @@
 package guibot.task;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import guibot.Parser;
+import guibot.exception.WrongDateTimeFormatException;
 
 /**
  * Represents a deadline task.
  */
 public class Deadline extends Task {
-    private static final DateTimeFormatter STORAGE_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-    private static final DateTimeFormatter OUTPUT_DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("MMM d yyyy h.mma");
     private LocalDateTime deadline;
 
     /**
      * Creates a Deadline task.
      *
-     * @param arguments Array of strings containing the description and deadline of the task.
+     * @param description Description of the deadline task.
+     * @param deadline Deadline of the task.
      */
-    public Deadline(String[] arguments) {
-        super(arguments[0]);
-        deadline = LocalDateTime.parse(arguments[1], STORAGE_DATE_TIME_FORMAT);
+    private Deadline(String description, LocalDateTime deadline) {
+        super(description);
+        this.deadline = deadline;
+    }
+
+    /**
+     * Factory method that creates a Deadline task from an array of strings.
+     * Assumes that the number of elements in details is correct.
+     *
+     * @param details Array of string details to create Deadline task from.
+     * @throws WrongDateTimeFormatException If the date time is in the wrong format.
+     */
+    public static Deadline of(String... details) throws WrongDateTimeFormatException {
+        String description = details[0];
+        LocalDateTime deadline = Parser.getDateTimeFromString(details[1]);
+        return new Deadline(description, deadline);
     }
 
     @Override
     public String toStorageString() {
-        return "d//" + super.toStorageString() + "/" + deadline.format(STORAGE_DATE_TIME_FORMAT);
+        return "d//" + super.toStorageString() + "/" + Parser.getInputStringFromDateTime(deadline);
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + deadline.format(OUTPUT_DATE_TIME_FORMAT) + ")";
+        return "[D]" + super.toString() + " (by: " + Parser.getOutputStringFromDateTime(deadline) + ")";
     }
 }

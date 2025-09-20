@@ -1,6 +1,9 @@
 package guibot.gui;
 
+import java.io.IOException;
+
 import guibot.Guibot;
+import guibot.exception.GuibotException;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -46,6 +49,12 @@ public class MainWindow extends AnchorPane {
         guibot = g;
     }
 
+    private void closeProgramme() {
+        Scene scene = this.sendButton.getScene();
+        Stage stage = (Stage) scene.getWindow();
+        stage.close();
+    }
+
     /**
      * Creates two dialog boxes, one echoing user input and the other containing Guibot's reply and then appends them to
      * the dialog container. Clears the user input after processing.
@@ -53,16 +62,22 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = guibot.getResponse(input);
+        String response = "";
+        try {
+            response = guibot.getResponse(input);
+        } catch (GuibotException e) {
+            response = e.getMessage();
+        } catch (IOException e) {
+            closeProgramme();
+            e.printStackTrace();
+        }
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getGuibotDialog(response, guiImage)
         );
         userInput.clear();
-        if (input.matches("bye*")) {
-            Scene scene = this.sendButton.getScene();
-            Stage stage = (Stage) scene.getWindow();
-            stage.close();
+        if (input.equals("bye")) {
+            closeProgramme();
         }
     }
 }

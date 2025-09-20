@@ -32,14 +32,14 @@ public class TaskList {
     /**
      * Marks a task as done.
      *
-     * @param index Index of task to be marked as done.
+     * @param index Index of task to be marked as done (1 indexed).
      * @return String representation of the marked task.
      * @throws TaskNotFoundException If index does not correspond to a task on the list.
      */
     public String mark(int index) throws TaskNotFoundException {
-        if (index >= 0 && index < tasks.size()) {
-            tasks.get(index).mark();
-            return tasks.get(index).toString();
+        if (index > 0 && index <= tasks.size()) {
+            tasks.get(index - 1).mark();
+            return tasks.get(index - 1).toString();
         } else {
             throw new TaskNotFoundException();
         }
@@ -48,14 +48,14 @@ public class TaskList {
     /**
      * Marks a task as not done.
      *
-     * @param index Index of task to be marked as not done.
+     * @param index Index of task to be marked as not done (1 indexed).
      * @return String representation of the unmarked task.
      * @throws TaskNotFoundException If index does not correspond to a task on the list.
      */
     public String unmark(int index) throws TaskNotFoundException {
-        if (index >= 0 && index < tasks.size()) {
-            tasks.get(index).unmark();
-            return tasks.get(index).toString();
+        if (index > 0 && index <= tasks.size()) {
+            tasks.get(index - 1).unmark();
+            return tasks.get(index - 1).toString();
         } else {
             throw new TaskNotFoundException();
         }
@@ -64,13 +64,13 @@ public class TaskList {
     /**
      * Deletes a task.
      *
-     * @param index Index of task to be deleted.
+     * @param index Index of task to be deleted (1 indexed).
      * @return String representation of the deleted task.
      * @throws TaskNotFoundException If index does not correspond to a task on the list.
      */
     public String delete(int index) throws TaskNotFoundException {
-        if (index >= 0 && index < tasks.size()) {
-            return tasks.remove(index).toString();
+        if (index > 0 && index <= tasks.size()) {
+            return tasks.remove(index - 1).toString();
         } else {
             throw new TaskNotFoundException();
         }

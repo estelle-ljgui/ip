@@ -30,9 +30,14 @@ public class Guibot {
      *
      * @return A Guibot with its storage set to the file in the default location.
      */
-    public Guibot() throws DataFileCorruptedException, IOException {
+    public Guibot() throws IOException {
         storage = new Storage(DEFAULT_FILE_PATH);
-        tasks = storage.getTasks();
+        try {
+            tasks = storage.getTasks();
+        } catch (DataFileCorruptedException e) {
+            tasks = new TaskList();
+            System.out.println("Data file corrupted, starting from an empty tasklist");
+        }
     }
 
     /**
@@ -41,11 +46,7 @@ public class Guibot {
      * @param input The input string.
      * @return A string response
      */
-    public String getResponse(String input) {
-        try {
-            return Parser.parse(input).execute(tasks, storage);
-        } catch (GuibotException e) {
-            return e.getMessage();
-        }
+    public String getResponse(String input) throws GuibotException, IOException {
+        return Parser.parse(input).execute(tasks, storage);
     }
 }

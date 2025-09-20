@@ -1,8 +1,17 @@
 package guibot.command;
 
+import java.io.IOException;
+
+import guibot.Parser;
 import guibot.Storage;
 import guibot.TaskList;
+import guibot.exception.GuibotException;
+import guibot.exception.WrongInputFormatException;
+import guibot.task.Deadline;
+import guibot.task.Event;
 import guibot.task.Task;
+import guibot.task.TaskType;
+import guibot.task.Todo;
 
 /**
  * Command to add a task to the list.
@@ -16,12 +25,34 @@ public class AddCommand extends Command {
      *
      * @param task Task to be added.
      */
-    public AddCommand(Task task) {
+    private AddCommand(Task task) {
         this.task = task;
     }
 
+    /**
+     * Static factory method to construct an AddCommand from an input string.
+     *
+     * @param input The input string to construct the AddCommand from.
+     * @param taskType The type of task to be added.
+     * @return An AddCommand constructed from the string
+     * @throws WrongInputFormatException If the string is not in the correct format.
+     */
+    public static AddCommand of(String input, TaskType taskType) throws GuibotException {
+        try {
+            String[] details = Parser.getDetails(input, taskType.getSplitters());
+            Task task = switch (taskType) {
+            case TODO -> Todo.of(details[1]);
+            case DEADLINE -> Deadline.of(details[1], details[2]);
+            case EVENT -> Event.of(details[1], details[2], details[3]);
+            };
+            return new AddCommand(task);
+        } catch (WrongInputFormatException e) {
+            throw new WrongInputFormatException(taskType.getExpectedInputFormat());
+        }
+    }
+
     @Override
-    public String execute(TaskList tasks, Storage storage) {
+    public String execute(TaskList tasks, Storage storage) throws IOException {
         tasks.add(task);
         storage.saveTasks(tasks);
         return String.format(output, task.toString(), tasks.size());

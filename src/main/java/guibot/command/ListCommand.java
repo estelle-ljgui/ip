@@ -28,6 +28,7 @@ public class ListCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Storage storage) {
+        assert tasks != null : "Cannot list a null tasklist";
         return String.format(output, tasks.toString());
     }
 }

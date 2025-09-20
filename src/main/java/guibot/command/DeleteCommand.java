@@ -44,7 +44,9 @@ public class DeleteCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Storage storage) throws TaskNotFoundException, IOException {
+        assert tasks != null : "Cannot delete from a null tasklist";
         String taskString = tasks.delete(index);
+        assert storage != null : "Cannot save to a null storage";
         storage.saveTasks(tasks);
         return String.format(output, taskString, tasks.size());
     }

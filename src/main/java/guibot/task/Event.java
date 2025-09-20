@@ -33,6 +33,7 @@ public class Event extends Task {
      * @throws WrongDateTimeFormatException If the date time is in the wrong format.
      */
     public static Event of(String... details) throws WrongDateTimeFormatException {
+        assert details.length == 3 : "Wrong number of elements in details";
         String description = details[0];
         LocalDateTime start = Parser.getDateTimeFromString(details[1]);
         LocalDateTime end = Parser.getDateTimeFromString(details[2]);

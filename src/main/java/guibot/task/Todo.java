@@ -20,6 +20,7 @@ public class Todo extends Task {
      * @param details Array of string details to create Event task from.
      */
     public static Todo of(String... details) {
+        assert details.length == 1 : "Wrong number of elements in details";
         String description = details[0];
         return new Todo(description);
     }

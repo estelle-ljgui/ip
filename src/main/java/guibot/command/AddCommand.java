@@ -26,6 +26,7 @@ public class AddCommand extends Command {
      * @param task Task to be added.
      */
     private AddCommand(Task task) {
+        assert task != null : "Cannot make an AddCommand with a null task";
         this.task = task;
     }
 
@@ -53,7 +54,9 @@ public class AddCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Storage storage) throws IOException {
+        assert tasks != null : "Cannot add to a null tasklist";
         tasks.add(task);
+        assert storage != null : "Cannot save to a null storage";
         storage.saveTasks(tasks);
         return String.format(output, task.toString(), tasks.size());
     }

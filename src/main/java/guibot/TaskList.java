@@ -26,6 +26,7 @@ public class TaskList {
      * @param t Task to be added.
      */
     public void add(Task t) {
+        assert t != null : "Cannot add a null task";
         tasks.add(t);
     }
 
@@ -80,6 +81,7 @@ public class TaskList {
      * Returns the number of tasks in the list.
      */
     public int size() {
+        assert tasks != null : "Cannot get size of null tasklist";
         return tasks.size();
     }
 

@@ -30,6 +30,7 @@ public class Deadline extends Task {
      * @throws WrongDateTimeFormatException If the date time is in the wrong format.
      */
     public static Deadline of(String... details) throws WrongDateTimeFormatException {
+        assert details.length == 2 : "Wrong number of elements in details";
         String description = details[0];
         LocalDateTime deadline = Parser.getDateTimeFromString(details[1]);
         return new Deadline(description, deadline);

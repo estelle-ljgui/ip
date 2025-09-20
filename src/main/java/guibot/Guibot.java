@@ -9,7 +9,7 @@ import guibot.exception.GuibotException;
  * Represents a Guibot.
  */
 public class Guibot {
-    private static final String DEFAULT_FILE_PATH = "../data/tasks.txt";
+    private static final String DEFAULT_FILE_PATH = "src/main/data/tasks.txt";
 
     private Storage storage;
     private TaskList tasks;
@@ -22,7 +22,8 @@ public class Guibot {
      */
     public Guibot(String filePath) throws DataFileCorruptedException, IOException {
         storage = new Storage(filePath);
-        tasks = storage.getTasks();
+        tasks = new TaskList();
+        storage.loadTasks(tasks);
     }
 
     /**
@@ -32,8 +33,9 @@ public class Guibot {
      */
     public Guibot() throws IOException {
         storage = new Storage(DEFAULT_FILE_PATH);
+        tasks = new TaskList();
         try {
-            tasks = storage.getTasks();
+            storage.loadTasks(tasks);
         } catch (DataFileCorruptedException e) {
             tasks = new TaskList();
             System.out.println("Data file corrupted, starting from an empty tasklist");

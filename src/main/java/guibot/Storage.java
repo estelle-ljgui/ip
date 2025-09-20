@@ -31,18 +31,15 @@ public class Storage {
     }
 
     /**
-     * Gets tasks from data file and return them in a TaskList.
+     * Loads tasks from data file into a TaskList.
      *
-     * @return TaskList of tasks stored in the data file.
      * @throws DataFileCorruptedException If data file is corrupted.
      */
-    public TaskList getTasks() throws IOException, DataFileCorruptedException {
+    public void loadTasks(TaskList tasks) throws IOException, DataFileCorruptedException {
         Scanner taskReader = new Scanner(filePath);
-        TaskList tasks = new TaskList();
         while (taskReader.hasNextLine()) {
             tasks.add(Parser.getTaskFromString(taskReader.nextLine()));
         }
-        return tasks;
     }
 
     /**

@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import guibot.command.AddCommand;
+import guibot.command.ArchiveCommand;
 import guibot.command.Command;
 import guibot.command.DeleteCommand;
 import guibot.command.FindCommand;
@@ -46,6 +47,7 @@ public class Parser {
         case "todo" -> AddCommand.of(input, TaskType.TODO);
         case "deadline" -> AddCommand.of(input, TaskType.DEADLINE);
         case "event" -> AddCommand.of(input, TaskType.EVENT);
+        case "archive" -> ArchiveCommand.of(input);
         default -> throw new UnknownRequestException();
         };
     }

@@ -26,6 +26,7 @@ Example
    todo Do laundry
    ```
 
+
 ### Set deadlines
 Create a task with a deadline
    ```bash
@@ -36,6 +37,7 @@ Example
    deadline Submit report /by 2025-09-30 2359
    ```
 
+
 ### Add events
 Create an event with start and end times
    ```bash
@@ -43,8 +45,9 @@ Create an event with start and end times
    ```
 Example
    ```bash
-   event Team meeting /from 2025-09-22 14:00 /to 2025-09-22 15:00
+   event Team meeting /from 2025-09-22 1400 /to 2025-09-22 1500
    ```
+
 
 ### Mark and Unmark tasks
 Mark a task as done
@@ -56,11 +59,13 @@ Unmark task
    unmark <task_number>
    ```
 
+
 ### List tasks
 View all tasks
    ```bash
    list
    ```
+
 
 ### Find tasks
 Search for tasks by keyword
@@ -68,11 +73,13 @@ Search for tasks by keyword
    find <search_string>
    ```
 
+
 ### Archive tasks
 Save tasks to a file
    ```bash
    archive <file_name>
    ```
+
 
 ### Load tasks
 Load tasks from an archived file

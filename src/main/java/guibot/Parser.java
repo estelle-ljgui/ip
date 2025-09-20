@@ -1,5 +1,6 @@
 package guibot;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -10,6 +11,7 @@ import guibot.command.Command;
 import guibot.command.DeleteCommand;
 import guibot.command.FindCommand;
 import guibot.command.ListCommand;
+import guibot.command.LoadCommand;
 import guibot.command.MarkCommand;
 import guibot.command.UnmarkCommand;
 import guibot.exception.DataFileCorruptedException;
@@ -35,7 +37,7 @@ public class Parser {
      * @param input The input in String format.
      * @throws GuibotException If input is missing arguments.
      */
-    public static Command parse(String input) throws GuibotException {
+    public static Command parse(String input) throws GuibotException, IOException {
         String commandWord = input.split(" ", 2)[0];
 
         return switch (commandWord) {
@@ -48,6 +50,7 @@ public class Parser {
         case "deadline" -> AddCommand.of(input, TaskType.DEADLINE);
         case "event" -> AddCommand.of(input, TaskType.EVENT);
         case "archive" -> ArchiveCommand.of(input);
+        case "load" -> LoadCommand.of(input);
         default -> throw new UnknownRequestException();
         };
     }

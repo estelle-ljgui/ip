@@ -50,4 +50,11 @@ public class Storage {
     public void saveTasks(TaskList taskList) throws IOException {
         Files.writeString(filePath, taskList.toStorageString());
     }
+
+    /**
+     * Deletes the data file.
+     */
+    public void deleteFile() throws IOException {
+        Files.delete(filePath);
+    }
 }

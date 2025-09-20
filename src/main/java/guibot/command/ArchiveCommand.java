@@ -25,7 +25,7 @@ public class ArchiveCommand extends Command {
     }
 
     /**
-     * Static factory method to construct a ArchiveCommand from an input string.
+     * Static factory method to construct an ArchiveCommand from an input string.
      *
      * @param input The input string to construct the ArchiveCommand from.
      * @return An ArchiveCommand constructed from the string.
@@ -43,7 +43,7 @@ public class ArchiveCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Storage storage) throws IOException {
-        Storage archiveStorage = new Storage(String.format("src/main/data/%s.txt", fileName));
+        Storage archiveStorage = new Storage(String.format("src/main/data/archive/%s.txt", fileName));
         assert tasks != null : "Cannot archive tasks in a null tasklist";
         archiveStorage.saveTasks(tasks);
         tasks.clear();

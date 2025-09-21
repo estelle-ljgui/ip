@@ -5,8 +5,8 @@ import java.io.IOException;
 import guibot.Guibot;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.image.Image;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -20,11 +20,13 @@ public class Main extends Application {
             Scene scene = new Scene(fxmlLoader.load());
             MainWindow mw = fxmlLoader.getController();
             stage.setScene(scene);
-	    stage.setTitle("Guibot");
+            stage.setTitle("Guibot");
             Image icon = new Image(getClass().getResourceAsStream("/images/icon.png"));
-	    stage.getIcons().add(icon);
+            stage.getIcons().add(icon);
             mw.setGuibot(new Guibot()); // inject the Guibot instance
             stage.show();
+            mw.prefWidthProperty().bind(stage.getScene().widthProperty());
+            mw.prefHeightProperty().bind(stage.getScene().heightProperty());
         } catch (IOException e) {
             e.printStackTrace();
         }

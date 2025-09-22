@@ -88,4 +88,12 @@ Load tasks from an archived file
    load <file_name>
    ```
 
+
+### Bye
+Close the Guibot
+   ```bash
+   bye
+   ```
+
+
 This guide provides the basics for getting started with Guibot. Enjoy managing your tasks!
